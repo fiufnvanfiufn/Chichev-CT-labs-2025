@@ -1,14 +1,11 @@
-// overload.cpp  -  запись  структур в  файл перегруженной
-// операцией <<
 #include <iostream>
 
 using namespace std;
 
-class gamma {
+class Railways {
 private:
-    static int total; //всего объектов
-    //(только объявление)
-    int id;  //ID текущего объекта
+    static int total;
+    int id;
 public:
     gamma() //конструктор без аргументов
     {
