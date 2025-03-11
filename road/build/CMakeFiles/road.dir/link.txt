@@ -1,0 +1,2 @@
+/usr/bin/ar qc libroad.a CMakeFiles/road.dir/road.cpp.o
+/usr/bin/ranlib libroad.a

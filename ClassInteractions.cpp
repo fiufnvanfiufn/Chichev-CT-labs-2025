@@ -1,5 +1,6 @@
 #include "ClassInteractions.hpp"
-#include "road/road.hpp"
+#include <limits>
+#include <cctype>
 
 namespace {
 void PrintMenu() {
@@ -10,8 +11,7 @@ void PrintMenu() {
               << "4. Добавление нового объекта в БД" << '\n'
               << "5. Удаление элемента из БД" << '\n'
               << "6. Вывод БД на экран" << "\n"
-              << "7. Выход" << "\n"
-              << std::endl;
+              << "7. Выход" << std::endl;
 }
 void ReadContinueExecution(char& ReadContinueExecution) {
     std::cout << "Введите [y/n] для продожения выполнения программы" << std::endl;
@@ -61,6 +61,13 @@ void SelectMethod() {
         int method{};
         ReadMethodFromStdin(method);
 
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Введите число цифрами!!!" << std::endl;
+            continue;
+        }
+
         switch (static_cast<Methods>(method)) {
             case Methods::ReadDataFromFile:
                 ReadDataFromFile(Data, elements, massiveLength);
@@ -80,13 +87,16 @@ void SelectMethod() {
             case Methods::PrintDataConsole:
                 PrintDataConsole(Data, elements);
                 break;
+            case Methods::Exit:
+                continueExecution = 'n';
+                delete[] Data;
+                break;
             default:
                 std::cout << "Такого действия нет" << std::endl;
                 break;
         }
-        ReadContinueExecution(continueExecution);
     }
-    delete[] Data;
+
 }
 
 void SortData(road* Data, int elements) {
@@ -103,8 +113,8 @@ void SortData(road* Data, int elements) {
 
     for (size_t i = 0; i < elements - 1; ++i) {
         for (size_t j = 0; j < elements - 1 - i; ++j) {
-            char* a = Data[j].GetRoadName();
-            char* b = Data[j + 1].GetRoadName();
+            const char* a = Data[j].GetRoadName();
+            const char* b = Data[j + 1].GetRoadName();
             if (strcmp(Data[j].GetRoadName(), Data[j + 1].GetRoadName()) > 0) {
                 road a = Data[j];
                 Data[j] = Data[j + 1];
@@ -120,7 +130,7 @@ void SortData(road* Data, int elements) {
 }
 
 void ReadDataFromFile(road* Data, int& elements, int& massiveLength) {
-    std::ifstream inputFile("input.txt");
+    std::ifstream inputFile("../input.txt");
 
     if (!inputFile) {
         std::cout << "Произошла ошибка при открытии файла" << std::endl;
@@ -143,7 +153,7 @@ void WriteDataToFile(road* Data, int elements) {
         return;
     }
 
-    std::ofstream fout("input.txt");
+    std::ofstream fout("../input.txt");
 
     if (!fout) {
         std::cout << "Ошибка при открытии файла" << std::endl;
@@ -164,20 +174,55 @@ void AddNewElementToData(road* Data, int& elements, int& massiveLength) {
     if (elements + 1 >= massiveLength) {
         Resize(Data, massiveLength);
     }
-
-    std::cin >> Data[elements];
+    road p;
+    std::cout << "Введите имя, длину, ширину дороги, максимальную скорость на ней" << std::endl;
+    std::cin >> p;
+    for (int i = 0; p.GetRoadName()[i] != '\0'; ++i) {
+        if (!std::isdigit(p.GetRoadName()[i] != '\0')) {
+            std::cout << "Ввести нужно имя нужно буквами, а не цифрами" << std::endl;
+            return;
+        }
+    }
+    if (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Имя нужно ввести буквами!" << std::endl;
+        return;
+    }
+    Data[elements] = p;
     elements++;
 }
 
-void DeleteElementFromData(road* Data, int& elements) {
+void DeleteElementFromData(road*& Data, int& elements) {
     if (Data == nullptr) {
         std::cout << "Произошла ошибка при передаче массива" << std::endl;
         return;
     }
 
+    if (elements == 0) {
+        std::cout << "никаких дорог я еще не знаю, добавь или считай" << std::endl;
+        return;
+    }
+
+
+
     char* deletedElement = new char[30];
-    std::cout << "Введите имя дороги вы хотите удалить" << std::endl;
+    std::cout << "Введите буквами имя дороги вы хотите удалить" << std::endl;
     std::cin >> deletedElement;
+
+    for (int i = 0; deletedElement[i] != '\0'; ++i) {
+        if (std::isdigit(deletedElement[i])) {
+            std::cout << "Ввести нужно имя нужно буквами, а не цифрами" << std::endl;
+            return;
+        }
+    }
+
+    if (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Имя нужно ввести буквами!" << std::endl;
+        return;
+    }
 
     road* NewData = new road[elements - 1];
     bool isElementInData = false;
@@ -187,9 +232,13 @@ void DeleteElementFromData(road* Data, int& elements) {
         if (std::strcmp(Data[i].GetRoadName(), deletedElement) != 0) {
             NewData[k] = Data[i];
             k += 1;
-            std::cout << Data[i];
             isElementInData = true;
         }
+    }
+    if (isElementInData) {
+        std::cout << "Дороги с таким именем нет" << std::endl;
+        delete[] NewData;
+        return;
     }
 
     delete[] Data;
