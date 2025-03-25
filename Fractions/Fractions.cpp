@@ -3,7 +3,7 @@
 namespace ClassFractions{
 Fractions::Fractions() {
     _numerator = 0;
-    _denominator = 0;
+    _denominator = 1;
 }
 
 Fractions::Fractions(int integerPart, int numerator, int denominator) {
@@ -25,20 +25,22 @@ Fractions::Fractions(const Fractions& ex) {
 Fractions::Fractions(const char* line) {
     int integerPart{};
     int numerator{};
-    int denominator{};
+    int denominator = 1;
 
     if (sscanf(line, "%d %d/%d", &integerPart, &numerator, &denominator) == 3) {
-        sscanf(line, "%d/%d", &integerPart, &numerator, &denominator);
-    } else if (sscanf(line, "%d %d/%d", &integerPart, &numerator, &denominator) == 2) {
-        sscanf(line, "%d/%d", &numerator, &denominator);
-    } else if (sscanf(line, "%d %d/%d", &integerPart, &numerator, &denominator) == 1){
-        sscanf(line, "%d", &integerPart);
+    } else if (sscanf(line, "%d/%d", &numerator, &denominator) == 2) {
+        integerPart = 0;
+    } else if (sscanf(line, "%d", &integerPart) == 1){
+        numerator = 0;
+        denominator = 1;
     } else {
         std::cout << "Вы неправильно задали дробь" << std::endl;
+        exit(1);
     }
 
-    SetNumerator(numerator + denominator * integerPart);
+    SetNumerator(numerator + integerPart * denominator);
     SetDenominator(denominator);
+    ShortenFraction();
 }
 
 Fractions& Fractions::operator=(const Fractions& other) {
@@ -77,29 +79,21 @@ Fractions& Fractions::operator=(const char* line) {
     int denominator = 1;
 
     if (sscanf(line, "%d %d/%d", &integerPart, &numerator, &denominator) == 3) {
-        SetNumerator(numerator + integerPart * denominator);
-        SetDenominator(denominator);
-        ShortenFraction();
-        return *this;
     } else if (sscanf(line, "%d/%d", &numerator, &denominator) == 2) {
         integerPart = 0;
-        SetNumerator(numerator + integerPart * denominator);
-        SetDenominator(denominator);
-        ShortenFraction();
-        return *this;
     } else if (sscanf(line, "%d", &integerPart) == 1){
         numerator = 0;
         denominator = 1;
-        SetNumerator(numerator + integerPart * denominator);
-        SetDenominator(denominator);
-        ShortenFraction();
-        return *this;
     } else {
         std::cout << "Вы неправильно задали дробь" << std::endl;
+        exit(1);
     }
-
+    SetNumerator(numerator + integerPart * denominator);
+    SetDenominator(denominator);
+    ShortenFraction();
     return *this;
-};
+}
+
 Fractions& Fractions::operator=(double x) {
     int whole{};
     int fraction{};
@@ -188,26 +182,21 @@ Fractions Fractions::operator+=(double x) {
 }
 
 std::istream& operator>>(std::istream& in, Fractions& a) {
-    char* line = new char[30];
-    in >> line;
+    char line[30];
+    in.getline(line, 30);
     a = line;
     return in;
 }
 
 std::ostream& operator<<(std::ostream& out, const Fractions& a) {
-    if (a._denominator == 0) {
-        out << "знаменатель равен 0!" << std::endl;
-        return out;
-    }
-
     if (std::abs(a._numerator / a._denominator) < 1 && a._numerator != 0) {
-        out << a._numerator << '/' << a._denominator << std::endl;
+        out << a._numerator << '/' << a._denominator;
     } else if (a._numerator == 0) {
         out << a._numerator / a._denominator << std::endl;
-    } else if (std::abs(a._denominator == 1)) {
-        out << a._numerator << std::endl;
+    } else if (std::abs(a._denominator) == 1) {
+        out << a._numerator;
     } else {
-        out << a._numerator / a._denominator << ' ' << std::abs(a._numerator - a._denominator * (a._numerator / a._denominator)) << '/' << a._denominator << std::endl;
+        out << a._numerator / a._denominator << ' ' << std::abs(a._numerator - a._denominator * (a._numerator / a._denominator)) << '/' << a._denominator;
     }
 
     return out;

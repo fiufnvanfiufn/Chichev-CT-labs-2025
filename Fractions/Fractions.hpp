@@ -4,6 +4,7 @@
 #include <iostream>
 #include <numeric>
 #include <cmath>
+#include <cstdlib>
 
 namespace ClassFractions {
 class Fractions {
