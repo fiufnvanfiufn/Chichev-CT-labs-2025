@@ -186,4 +186,40 @@ Fractions Fractions::operator+=(double x) {
     ShortenFraction();
     return *this;
 }
+
+std::istream& operator>>(std::istream& in, Fractions& a) {
+    char* line = new char[30];
+    in >> line;
+    a = line;
+    return in;
+}
+
+std::ostream& operator<<(std::ostream& out, const Fractions& a) {
+    if (a._denominator == 0) {
+        out << "знаменатель равен 0!" << std::endl;
+        return out;
+    }
+
+    if (std::abs(a._numerator / a._denominator) < 1 && a._numerator != 0) {
+        out << a._numerator << '/' << a._denominator << std::endl;
+    } else if (a._numerator == 0) {
+        out << a._numerator / a._denominator << std::endl;
+    } else if (std::abs(a._denominator == 1)) {
+        out << a._numerator << std::endl;
+    } else {
+        out << a._numerator / a._denominator << ' ' << std::abs(a._numerator - a._denominator * (a._numerator / a._denominator)) << '/' << a._denominator << std::endl;
+    }
+
+    return out;
+}
+
+Fractions operator+(int a, const Fractions& b) {
+    Fractions x(a, 0, 1);
+    return x + b;
+}
+
+Fractions operator+(double a, const Fractions& b) {
+    Fractions x(a);
+    return x + b;
+}
 }  // namespace ClassFractions

@@ -55,40 +55,12 @@ public:
 
     int Get_Denominator();
 
-    friend Fractions operator+(int a, const Fractions& b) {
-        Fractions x(a, 0, 1);
-        return x + b;
-    }
+    friend Fractions operator+(int a, const Fractions& b);
 
-    friend Fractions operator+(double a, const Fractions& b) {
-        Fractions x(a);
-        return x + b;
-    }
+    friend Fractions operator+(double a, const Fractions& b);
 
-    friend std::ostream& operator<<(std::ostream& out, const Fractions& a) {
-        if (a._denominator == 0) {
-            out << "знаменатель равен 0!" << std::endl;
-            return out;
-        }
+    friend std::ostream& operator<<(std::ostream& out, const Fractions& a);
 
-        if (std::abs(a._numerator / a._denominator) < 1 && a._numerator != 0) {
-            out << a._numerator << '/' << a._denominator << std::endl;
-        } else if (a._numerator == 0) {
-            out << a._numerator / a._denominator << std::endl;
-        } else if (std::abs(a._denominator == 1)) {
-            out << a._numerator << std::endl;
-        } else {
-            out << a._numerator / a._denominator << ' ' << std::abs(a._numerator - a._denominator * (a._numerator / a._denominator)) << '/' << a._denominator << std::endl;
-        }
-
-        return out;
-    }
-
-    friend std::istream& operator>>(std::istream& in, Fractions& a) {
-        char* line = new char[30];
-        in >> line;
-        a = line;
-        return in;
-    }
+    friend std::istream& operator>>(std::istream& in, Fractions& a);
 };
 }  // namespace ClassFractions
