@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/lab2.dir/main.cpp.o CMakeFiles/lab2.dir/ClassInteractions.cpp.o -o lab2  road/libroad.a 

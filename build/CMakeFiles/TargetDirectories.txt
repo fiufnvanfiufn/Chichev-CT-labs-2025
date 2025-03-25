@@ -1,0 +1,6 @@
+/home/van/git/Chichev-CT-labs-2025/build/CMakeFiles/lab3.dir
+/home/van/git/Chichev-CT-labs-2025/build/CMakeFiles/edit_cache.dir
+/home/van/git/Chichev-CT-labs-2025/build/CMakeFiles/rebuild_cache.dir
+/home/van/git/Chichev-CT-labs-2025/build/Fractions/CMakeFiles/Fractions.dir
+/home/van/git/Chichev-CT-labs-2025/build/Fractions/CMakeFiles/edit_cache.dir
+/home/van/git/Chichev-CT-labs-2025/build/Fractions/CMakeFiles/rebuild_cache.dir
