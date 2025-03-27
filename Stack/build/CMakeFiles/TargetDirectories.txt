@@ -1,0 +1,3 @@
+/home/van/git/Chichev-CT-labs-2025/Steck/build/CMakeFiles/Steck.dir
+/home/van/git/Chichev-CT-labs-2025/Steck/build/CMakeFiles/edit_cache.dir
+/home/van/git/Chichev-CT-labs-2025/Steck/build/CMakeFiles/rebuild_cache.dir

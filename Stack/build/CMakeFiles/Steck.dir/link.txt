@@ -1,0 +1,2 @@
+/usr/bin/ar qc libSteck.a CMakeFiles/Steck.dir/Steck.cpp.o
+/usr/bin/ranlib libSteck.a
