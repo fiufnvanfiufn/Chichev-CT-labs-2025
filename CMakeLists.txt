@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.23)
 
-set(project "lab3")
+set(project "lab4")
 project(${project})
 
 set(CMAKE_CXX_STANDARD 17)
@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(${project}_SOURCES
         main.cpp)
 
-add_subdirectory(Fractions)
+add_subdirectory(Stack)
 
 set(${project}_SOURCE_LIST
         ${${project}_SOURCES})
@@ -16,4 +16,4 @@ set(${project}_SOURCE_LIST
 add_executable(${project}
         ${${project}_SOURCE_LIST})
 
-target_link_libraries(${project} Fractions)
+target_link_libraries(${project} Stack)
