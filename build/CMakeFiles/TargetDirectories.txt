@@ -1,0 +1,6 @@
+/home/van/git/Chichev-CT-labs-2025/build/CMakeFiles/lab4.dir
+/home/van/git/Chichev-CT-labs-2025/build/CMakeFiles/edit_cache.dir
+/home/van/git/Chichev-CT-labs-2025/build/CMakeFiles/rebuild_cache.dir
+/home/van/git/Chichev-CT-labs-2025/build/Stack/CMakeFiles/Stack.dir
+/home/van/git/Chichev-CT-labs-2025/build/Stack/CMakeFiles/edit_cache.dir
+/home/van/git/Chichev-CT-labs-2025/build/Stack/CMakeFiles/rebuild_cache.dir
