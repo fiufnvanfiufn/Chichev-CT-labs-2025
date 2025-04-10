@@ -19,11 +19,8 @@ void Multipliers(int n, MyStack<DATA> &stack) {
         std::cout << n;
     }
     std::cout << std::endl;
-    while (!stack.empty()) {
-        std::cout << stack.top_inf() << ' ';
-        stack.pop();
-    }
-    std::cout << std::endl;
+
+    std::cout << stack << std::endl;
 }
 
 int main(int, char**) {
@@ -33,5 +30,18 @@ int main(int, char**) {
     std::cin >> n;
 
     Multipliers(n, Data);
+
+    MyStack<char> CharData;
+    CharData.push('a');
+    CharData.push('b');
+    CharData.push('c');
+
+    MyStack<char> CharData2(CharData);
+    MyStack<char> CharData3;
+    CharData3 = CharData2;
+    CharData2.push('d');
+    std::cout << CharData2 << std::endl;
+    std::cout << CharData3 << std::endl;
+
     return 0;
 }
